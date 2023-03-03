@@ -38,13 +38,12 @@ class Solution {
             }
             else
             {
-                i=i-nindx;
-                nindx=0;
+                i=i-nindx; // go back to to the last i checked for haystack
+                nindx=0; // start checking from start of needle
             }
             if(nindx==nlen)
-                return (i-nindx+1);
+                return (i-nindx+1);  //needle position (nindx-1) as nindx=nlen
         }
         return -1;
     }
 }
-
