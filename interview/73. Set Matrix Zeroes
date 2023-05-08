@@ -1,0 +1,74 @@
+/* 73. Set Matrix Zeroes
+
+Intuition: get 2 arrays to store- 1. the row when 0 exists and 2. Col where 0 exists.
+when row[i] & col[j] both are 0, we put mat[i][j]=0
+>> Now doing the same thing without the extra space: use the 0th row, and col as the row and col array.
+>> check separately if 0 exists in 0th row and column, and store it, so the data does not get lost. */
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int n=matrix.length;
+        int m=matrix[0].length;
+        // check if 0 exists in 0th row
+        Boolean row0=false;
+        for(int j=0;j<m;j++)
+        {
+            if(matrix[0][j]==0)
+                row0 = true;
+        }
+        // System.out.println("row0:"+row0);
+        // check if 0 exists in 0th col
+        Boolean col0=false;
+        for(int i=0;i<n;i++)
+        {
+            if(matrix[i][0]==0)
+                col0 = true;
+        }
+        // System.out.println("col0:"+col0);
+        // using the 0th row and col to store the row and col where 0 exists, 
+        // exclude 0th row and col in checking
+        for(int i=1;i<n;i++)
+        {
+            for(int j=1;j<m;j++)
+            {
+                if(matrix[i][j]==0)
+                {
+                    matrix[i][0]=0;
+                    matrix[0][j]=0;
+                }
+            }
+        }
+        // System.out.println("update 0th row/col:"+Arrays.deepToString(matrix));
+        // final update: mat[i][j]=0, when 0 exists in both ith row and jth col
+        // exclude 0th row and col
+        for(int i=1;i<n;i++)
+        {
+            for(int j=1;j<m;j++)
+            {
+                if(matrix[i][0]==0 || matrix[0][j]==0)
+                {
+                    matrix[i][j]=0;
+                }
+            }
+        }
+        // System.out.println("update other row/col:"+Arrays.deepToString(matrix));
+        // Finally, update the 0th row if 0 was originally there in 0th row
+        if(row0)
+        {
+            for(int j=0;j<m;j++)
+            {
+                matrix[0][j]=0;
+            }
+        }
+        // System.out.println("update 0th row:"+Arrays.deepToString(matrix));
+        // Finally, update the 0th col if 0 was originally there in 0th col
+        if(col0)
+        {
+            for(int i=0;i<n;i++)
+            {
+                matrix[i][0]=0;
+            }
+        }
+        // System.out.println("update 0th col:"+Arrays.deepToString(matrix));
+    }
+}
