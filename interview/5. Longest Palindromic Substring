@@ -1,0 +1,70 @@
+/* 5. Longest Palindromic Substring
+
+Given a string s, return the longest 
+palindromic
+ 
+substring
+ in s.
+
+ 
+
+Example 1:
+
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+Example 2:
+
+Input: s = "cbbd"
+Output: "bb"
+ 
+
+Constraints:
+
+1 <= s.length <= 1000
+s consist of only digits and English letters. */
+
+/* take every element as a centre and expand on both side and find longest palindrome substring. TC: O(n^2) */
+/*When breaks from the loop p1 and p2 will be just outside of the required string 
+so my actual substring is p1+1 to p2-1 . Length = (p2-1)-(p1+1)+1 =p2-p1-1*/
+// optimised approch : Manacher's Algo O(n) <To Do>
+
+class Solution {
+    public String longestPalindrome(String s) {
+        Pair<Integer,Integer> pair=new Pair<>(0,0);
+        int len=0;
+        int n=s.length();
+        int p1=-1;
+        int p2=-1;
+        // odd length palindrome
+        for(int i=0;i<n;i++)
+        {
+            p1=i;p2=i; //single centre i
+            // expand around the centre
+            while(p1>=0 && p2<n && s.charAt(p1)==s.charAt(p2))
+            {
+                p1--;p2++;
+            }
+            if(len<(p2-p1-1)) //check if length is greater then store in pair
+            {
+                len=(p2-p1-1);
+                pair=new Pair((p1+1),(p2-1));
+            }
+        }
+        // even length palindrome
+        for(int i=0;i<n-1;i++)
+        {
+            p1=i;p2=i+1; //2 centres i and (i+1)
+            while(p1>=0 && p2<n && s.charAt(p1)==s.charAt(p2))
+            {
+                p1--;p2++;
+            }
+            if(len<(p2-p1-1)) //check if length is greater then store in pair
+            {
+                len=(p2-p1-1);
+                pair=new Pair((p1+1),(p2-1));
+            }
+        }
+        return s.substring(pair.getKey(),(pair.getValue()+1));
+    }
+}
