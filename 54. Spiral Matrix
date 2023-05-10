@@ -1,0 +1,84 @@
+/* 54. Spiral Matrix
+Given an m x n matrix, return all elements of the matrix in spiral order.
+
+Example 1:
+
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+
+Example 2:
+Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+ 
+
+Constraints:
+
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 10
+-100 <= matrix[i][j] <= 100 */
+
+/* example 2D array >> ODD and Even
+        00 01 02    00 01 02 03     00 01 02 03
+        10 11 12    10 11 12 13     10 11 12 13
+        20 21 22    20 21 22 23     20 21 22 23
+                                    30 31 32 33  */
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int row=0;
+        int col=0;
+        int n=matrix.length;
+        int m=matrix[0].length;
+        ArrayList<Integer> ans=new ArrayList<Integer>();
+
+        while(n>1 && m>1)
+        {
+            // take in --> direction , only col changes (m-1) times
+            for(int i=1;i<m;i++)
+            {
+                ans.add(matrix[row][col++]);
+            }
+
+            // take in downward direction , only row changes (n-1) times
+            for(int i=1;i<n;i++)
+            {
+                ans.add(matrix[row++][col]);
+            }
+
+            // take in <-- direction , only col changes (m-1) times
+            for(int i=1;i<m;i++)
+            {
+                ans.add(matrix[row][col--]);
+            }
+            // take in upward direction , only row changes (n-1) times
+            for(int i=1;i<n;i++)
+            {
+                ans.add(matrix[row--][col]);
+            }
+            m=m-2;
+            n=n-2;
+            row++;col++;
+        }
+        // edge case: only 1 inner row/col remaining
+        if(m>1 && n==1) //for 1 row 
+        {
+            for(int i=0;i<m;i++)
+            {
+                ans.add(matrix[row][col++]);
+            }
+        }
+        if(n>1 && m==1) //for 1 col
+        {
+            for(int i=0;i<n;i++)
+            {
+                ans.add(matrix[row++][col]);
+            }
+        }
+        if(n==1 && m==1) //inner 1*1 matrix
+        {
+            ans.add(matrix[row][col]);
+        }
+        return ans;
+    }
+}
