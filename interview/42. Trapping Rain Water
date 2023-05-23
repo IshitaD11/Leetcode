@@ -37,9 +37,10 @@ class Solution {
     }
 } */
 
-/*using prefix array, take left prefix array to store max height at left,
+/* using prefix array>> TC:O(n) SC:O(n)
+using prefix array >> take left prefix array to store max height at left,
         right prefix array to store max height at the right. water can be hold till, min of these two. 
-        sum+=min(left,right)-height[i] */
+        sum+=min(left,right)-height[i] 
 
 class Solution {
     public int trap(int[] height) {
@@ -63,4 +64,45 @@ class Solution {
         }
         return sum;
        }
-      }
+      } */
+      
+ /* using Two Pointer >> TC:O(n) SC:O(1)
+Two pointer approach >> consider leftmax and rightmax, starting from the left and right end respectively.
+if leftmax < rightmax -->  then leftmax is my minimum height, water = leftmax-A[i]
+similarly is rightmax < leftmax --> then rightmax is my minimum height, water = rightmax-A[i]
+When A[i] is greater than leftmax or rightmax --> do not calculate water, instead update the leftmax and rightmax only.
+when leftmax == rightmax --> do the check for leftmax/rightmax, it will be the same */
+
+        int left = 0;
+        int right = height.length-1;
+        int leftMax=height[left];
+        int rightMax=height[right];
+        int water=0;
+        while(left<right)
+        {
+            if(leftMax<rightMax)
+            {
+                left++;
+                if(leftMax<height[left])
+                {
+                    leftMax=height[left];
+                }
+                else
+                {
+                    water += leftMax-height[left];
+                }
+            }
+            else
+            {
+                right--;
+                if(rightMax<height[right])
+                {
+                    rightMax=height[right];
+                }
+                else
+                {
+                    water += rightMax-height[right];
+                }
+            }
+        }
+        return water;
