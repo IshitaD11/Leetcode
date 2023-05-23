@@ -73,6 +73,10 @@ similarly is rightmax < leftmax --> then rightmax is my minimum height, water = 
 When A[i] is greater than leftmax or rightmax --> do not calculate water, instead update the leftmax and rightmax only.
 when leftmax == rightmax --> do the check for leftmax/rightmax, it will be the same */
 
+
+class Solution {
+    public int trap(int[] height) {
+
         int left = 0;
         int right = height.length-1;
         int leftMax=height[left];
